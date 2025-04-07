@@ -8,8 +8,8 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "leaflet", "react", "react-dom"]
   },
   "include": ["src"]
- }
- 
+}

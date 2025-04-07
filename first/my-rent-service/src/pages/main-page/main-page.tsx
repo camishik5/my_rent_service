@@ -2,7 +2,9 @@ import React from 'react';
 import CitiesCard from '../../components/cities-card/cities-card';
 import Sorting from '../../components/Sorting';
 import { Logo } from '../../components/logo/logo';
+import Map from '../../components/map/map';
 import { OffersList } from '../../types/offer';
+import { offers } from '../../mocks/offers';
 
 type MainPageProps = {
   rentalOffersCount: number;
@@ -43,24 +45,13 @@ function MainPage({ rentalOffersCount, offersList }: MainPageProps): React.JSX.E
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#"><span>Paris</span></a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#"><span>Cologne</span></a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#"><span>Brussels</span></a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="#"><span>Amsterdam</span></a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#"><span>Hamburg</span></a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#"><span>Dusseldorf</span></a>
-              </li>
+              {['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'].map((city) => (
+                <li className="locations__item" key={city}>
+                  <a className={`locations__item-link tabs__item ${city === 'Amsterdam' ? 'tabs__item--active' : ''}`} href="#">
+                    <span>{city}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -73,17 +64,12 @@ function MainPage({ rentalOffersCount, offersList }: MainPageProps): React.JSX.E
 
               <Sorting />
 
-              {/* 
-                Для двух колонок добавляем стили Grid:
-                - repeat(2, 1fr) значит 2 колонки одинаковой ширины
-                - gap: 20px — отступ между карточками
-              */}
               <div
                 className="cities__places-list places__list tabs__content"
-                style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: 'repeat(2, 1fr)', 
-                  gap: '20px' 
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '20px'
                 }}
               >
                 {offersList.map((offer) => (
@@ -104,7 +90,7 @@ function MainPage({ rentalOffersCount, offersList }: MainPageProps): React.JSX.E
 
             <div className="cities__right-section">
               <section className="cities__map map">
-                {/* Здесь будет карта */}
+                <Map offers={offers} />
               </section>
             </div>
           </div>
