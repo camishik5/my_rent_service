@@ -1,20 +1,22 @@
 import React from 'react';
 import CitiesCard from '../../components/cities-card/cities-card';
 import Sorting from '../../components/Sorting';
-import { Logo } from '../../components/logo/logo'; // ✅ Импорт логотипа
+import { Logo } from '../../components/logo/logo';
+import { OffersList } from '../../types/offer';
 
 type MainPageProps = {
   rentalOffersCount: number;
+  offersList: OffersList[];
 };
 
-function MainPage({ rentalOffersCount }: MainPageProps): React.JSX.Element {
+function MainPage({ rentalOffersCount, offersList }: MainPageProps): React.JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Logo /> {/* ✅ Заменили a на компонент Logo */}
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -71,17 +73,39 @@ function MainPage({ rentalOffersCount }: MainPageProps): React.JSX.Element {
 
               <Sorting />
 
-              <div className="cities__places-list places__list tabs__content">
-                <CitiesCard imageSrc="img/apartment-01.jpg" price={120} title="Beautiful & luxurious apartment at great location" rating={4} />
-                <CitiesCard imageSrc="img/room.jpg" price={80} title="Wood and stone place" rating={3} />
-                <CitiesCard imageSrc="img/apartment-02.jpg" price={132} title="Canal View Prinsengracht" rating={5} />
-                <CitiesCard imageSrc="img/apartment-03.jpg" price={180} title="Nice, cozy, warm big bed apartment" rating={4} />
-                <CitiesCard imageSrc="img/room.jpg" price={80} title="Wood and stone place" rating={3} />
+              {/* 
+                Для двух колонок добавляем стили Grid:
+                - repeat(2, 1fr) значит 2 колонки одинаковой ширины
+                - gap: 20px — отступ между карточками
+              */}
+              <div
+                className="cities__places-list places__list tabs__content"
+                style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(2, 1fr)', 
+                  gap: '20px' 
+                }}
+              >
+                {offersList.map((offer) => (
+                  <CitiesCard
+                    key={offer.id}
+                    id={offer.id}
+                    title={offer.title}
+                    type={offer.type}
+                    price={offer.price}
+                    previewImage={offer.previewImage}
+                    isPremium={offer.isPremium}
+                    rating={offer.rating}
+                    isFavorite={offer.isFavorite}
+                  />
+                ))}
               </div>
             </section>
 
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                {/* Здесь будет карта */}
+              </section>
             </div>
           </div>
         </div>
